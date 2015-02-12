@@ -16,12 +16,6 @@ function CommentWriteBack_Init() {
             $.support.cors = true;
 
             var _this = this;
-            if (!_this.ExtensionLoaded) {
-                this.ExtensionLoaded = true;
-            }
-            else {
-                //alert('Extension loaded for ' + _this.Layout.ObjectId);
-            }
 
             // Add CSS
             Qva.LoadCSS(Qva.Remote + (Qva.Remote.indexOf('?') >= 0 ? '&' : '?') + 'public=only' + '&name=' + "Extensions/" + _extension + "/CommentWriteBackExt.css");
@@ -76,94 +70,51 @@ function CommentWriteBack_Init() {
             // ------------------------------------------------------------------
             function initGrid() {
                 var contentDiv = document.createElement("div");
-                // see http://stackoverflow.com/questions/139000/div-with-overflowauto-and-a-100-wide-table-problem
-                // for browsers < IE7
-                //tableDiv.style.width = _this.GetWidth() + "px";
-                //tableDiv.style.height = _this.GetHeight() - 35 + "px";
-                contentDiv.style.height = "100%";
-                contentDiv.style.width = "100%";
-                contentDiv.className = "contentDiv";
+                contentDiv.className = "commentWBBody";
 
-                var DisplayDiv = document.createElement("div");
-                //DisplayDiv.style.height = "100%";
-                DisplayDiv.style.width = "100%";
-                DisplayDiv.id = 'DisplayDiv' + GetSafeId();
-                DisplayDiv.className = "DisplayDiv";
+                var TopDiv = document.createElement("div");
+                TopDiv.className = "TopDiv";
 
-                var DisplayTextDiv = document.createElement("div");
-                DisplayTextDiv.id = ""
-                DisplayTextDiv.style.height = "90%";
-                DisplayTextDiv.style.width = "100%";
-                DisplayDiv.appendChild(DisplayTextDiv)
+                var CommentContainer = document.createElement("div");
+                CommentContainer.className = "CommentContainer";
+                CommentContainer.id = "CommentContainer" + GetSafeId();
+                addPushDiv(CommentContainer);
 
-                // var DisplayCommentTextArea = document.createElement("textarea");
-                // DisplayCommentTextArea.id = "DisplayCommentTextArea" + GetSafeId();
-                // DisplayCommentTextArea.className = "DisplayCommentTextArea";
-                // DisplayCommentTextArea.style.height = "100%";
-                // DisplayCommentTextArea.style.width = "100%"
-                // DisplayCommentTextArea.setAttribute("readonly", "true");
+                var addCommentDiv = document.createElement("div");
+                addCommentDiv.className = "addCommentDiv";
 
-                // DisplayTextDiv.appendChild(DisplayCommentTextArea);
+                var addCommentButton = document.createElement("input");
+                addCommentButton.setAttribute("type","button");
+                addCommentButton.value = "Add Comment";
+                addCommentButton.className = "addCommentBtn";
 
-                var AddCommentDiv = document.createElement("div");
-                AddCommentDiv.style.height = "10%";
-                AddCommentDiv.style.width = "100%";
-                DisplayDiv.appendChild(AddCommentDiv);
+                addCommentDiv.appendChild(addCommentButton);
 
-                var AddCommentButton = document.createElement("input")
-                AddCommentButton.type = "button";
-                AddCommentButton.value = "Add Comment";
-                AddCommentButton.id = "AddCommentButton" + GetSafeId();
-                AddCommentButton.className = "AddCommentButton";
-                AddCommentButton.addEventListener("click", AddComment, false);
-                AddCommentDiv.appendChild(AddCommentButton)
+                TopDiv.appendChild(CommentContainer);
+                TopDiv.appendChild(addCommentDiv);
 
-                var exitCommentButton = document.createElement("input");
-                exitCommentButton.type = "button";
-                exitCommentButton.value = "hide comments";
-                exitCommentButton.id = "exitCommentButton" + GetSafeId();
-                exitCommentButton.className = "exitCommentButton hide";
-                exitCommentButton.addEventListener("click", AddComment, false);
-                AddCommentDiv.appendChild(exitCommentButton)
+                var BottomDiv = document.createElement("div");
+                BottomDiv.id = "BottomDiv";
 
-                contentDiv.appendChild(DisplayDiv);
+                //BOTTOM DIV STUFF
 
-                var CommentDiv = document.createElement("div");
-                CommentDiv.style.height = "50%";
-                CommentDiv.style.width = "100%";
-                CommentDiv.className = "CommentDiv inactive";
-                CommentDiv.id = "CommentDiv" + GetSafeId();
+                contentDiv.appendChild(TopDiv);
+                contentDiv.appendChild(BottomDiv);
 
-                var AddTextDiv = document.createElement("div");
-                AddTextDiv.style.height = "80%";
-                AddTextDiv.style.width = "100%";
-                CommentDiv.appendChild(AddTextDiv)
-
-                var AddCommentTextAarea = document.createElement("textarea");
-                AddCommentTextAarea.id = "AddCommentTextArea" + GetSafeId();
-                AddCommentTextAarea.className = "AddCommentTextArea";
-                AddCommentTextAarea.style.height = "100%";
-                AddCommentTextAarea.style.width = "100%"
-                AddTextDiv.appendChild(AddCommentTextAarea);
-
-                var SaveCommentDiv = document.createElement("div");
-                SaveCommentDiv.style.height = "20%";
-                SaveCommentDiv.style.width = "100%";
-                CommentDiv.appendChild(SaveCommentDiv);
-
-                var SaveCommentButton = document.createElement("input")
-                SaveCommentButton.type = "button";
-                SaveCommentButton.value = "Save Comment";
-                SaveCommentButton.className = 'SaveCommentButton';
-                SaveCommentButton.addEventListener("click", SOMETHINGELSE, false);
-                SaveCommentDiv.appendChild(SaveCommentButton)
-
-                contentDiv.appendChild(CommentDiv);
-
-                _this.Element.appendChild(contentDiv);
-
+                 _this.Element.appendChild(contentDiv);
             }
 
+            function addPushDiv(elem){
+                var pushDiv = document.createElement("div");
+                pushDiv.className = "push";
+                elem.appendChild(pushDiv);
+            }
+
+            function clearCommentContainer(){
+                var container = document.getElementById('CommentContainer' + GetSafeId());
+                container.innerHTML = '';
+                addPushDiv(container);
+            }
             // ------------------------------------------------------------------
             // Data related
             // ------------------------------------------------------------------
@@ -212,7 +163,7 @@ function CommentWriteBack_Init() {
 					PostgetComments(data);
 				}
 				else{
-					$('#DisplayCommentTextArea' + GetSafeId()).val('');
+					clearCommentContainer();
 				}
 			}
 
@@ -253,20 +204,21 @@ function CommentWriteBack_Init() {
                 var DateTimeAdded = new Date(parseInt(Comment.DateAdded.replace("/Date(", "").replace(")/",""), 10));
 
                 var commentDiv = document.createElement("div");
-                commentDiv.className = "Comment";
+                commentDiv.className = "WBComment";
 
                 var commentTitle = document.createElement("div");
-                commentTitle.className = "title";
-                commentTitle.innerHTML = '<span class="user"><b>' + decodeURI(CommentsList[i].User) + '</b></span>'
-                                        + '<span class="date">' + DateTimeAdded.myFormat() + '</span>';
+                commentTitle.className = "CommentTitle";
+                commentTitle.innerHTML = '<span class="CommentUser"><b>' + decodeURI(Comment.User) + '</b></span>'
+                                        + '<span class="CommentDate">' + DateTimeAdded.myFormat() + '</span>';
 
                 var commentBody = document.createElement("div");
-                commentBody.className = "body";
+                commentBody.className = "CommentBody";
                 commentBody.innerHTML = '<span>' + Comment.Message + '</span>';
-
+                // alert(decodeURI(Comment.Message));
                 commentDiv.appendChild(commentTitle);
                 commentDiv.appendChild(commentBody);
 
+                $('#CommentContainer' + GetSafeId()).append(commentDiv);
             }
 
             // ------------------------------------------------------------------
@@ -351,10 +303,17 @@ function CommentWriteBack_Init() {
                     data: $.postify(params),
                     success:function(data){
                     	if(data.hasComments){
-                    		displayComments(data.Comments);
+                    		// displayComments(data.Comments);
+                            $('#CommentContainer' + GetSafeId()).val('');
+                            var container = document.getElementById('CommentContainer' + GetSafeId());
+                            container.innerHTML = '';
+                            for(var i = 0; i < data.Comments.length; i++){
+                                DisplayComment(data.Comments[i]);
+                            }
+                            addPushDiv(container);
                     	}
                     	else{
-                    		$('#DisplayCommentTextArea' + GetSafeId()).val('');
+                    		clearCommentContainer();
                     	}
                     },
                     error: function (xhr, textStatus, thrownError) {

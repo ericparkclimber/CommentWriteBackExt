@@ -1,214 +1,92 @@
+.commentWBBody{
+    width: 100%;
+    height: 100%;
+    font-family: Arial,Helvetica,sans-serif;
+}
 
-.DisplayCommentTextArea{
+.TopDiv{
+    height: 100%;
+}
+
+.BottomDiv{
+    height: 0%;
+}
+
+.CommentContainer{
     height: 100%;
     overflow-y:scroll;
+    background-color: #E9E9E9;
+    margin: 0 auto -25px;
 }
 
-.exitCommentButton.hide{
-    display: none;
-}
-.exitCommentButton{
-    float: right;
-    margin-left: auto;
-    margin-right: auto;
-    display: block;
-}
-
-.AddCommentButton.hide{
-    display: none;
-}
-.AddCommentButton{
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-
-}
-.SaveCommentButton{
-    display: block;
+.addCommentDiv{
+    width:150px;
     margin-left: auto;
     margin-right: auto;
 }
-.DisplayDiv.addingComment{
-    height: 50%;
+
+.addCommentDiv,.push{
+    height: 25px;
 }
 
-.DisplayDiv{
-    height: 100%;
+.addCommentBtn {
+  background: #3498db;
+  background-image: -webkit-linear-gradient(top, #3498db, #2980b9);
+  background-image: -moz-linear-gradient(top, #3498db, #2980b9);
+  background-image: -ms-linear-gradient(top, #3498db, #2980b9);
+  background-image: -o-linear-gradient(top, #3498db, #2980b9);
+  background-image: linear-gradient(to bottom, #3498db, #2980b9);
+  -webkit-border-radius: 28;
+  -moz-border-radius: 28;
+  border-radius: 28px;
+  color: #ffffff;
+  font-size: 12px;
+  padding: 3px 15px 3px 15px;
+  text-decoration: none;
 }
 
-.CommentDiv.active{
-    display:block;
+.addCommentBtn:hover {
+  background: #3cb0fd;
+  background-image: -webkit-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: -moz-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: -ms-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: -o-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
+  text-decoration: none;
 }
 
-.CommentDiv{
-    display: none;
+.WBComment{
+    border:3px solid #4e7bba;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 5px 5px 5px #7e7e7e;
+    margin-bottom: 15px;
+    margin-right: 5px;
+    background-color: #f1f1f1;
 }
 
-
-
-div.divTable
-{
-    position:relative;
-    font-size: 11px;
-    font-family: Arial, Tahoma;
-    color:#222; 
+.WBComment.currentUser{
+    border:3px solid #ba4e7b;
 }
 
-table.tblDataSelection
-{
-    overflow: auto;
-    border: 1px solid #C8C8C8;
-    border-collapse: collapse;
-    border-spacing: 0;
-    width: 100%;   
-    border-collapse: collapse;
-    
-}
-
-table.tblDataSelection thead th
-{
-    background: url("bg-thead.png") repeat-x scroll left top #eeeeee;
-    border-bottom: 1px solid #C8C8C8;
-    border-top: 1px solid #FFFFFF;  
-      
-}
-
-table.tblDataSelection tbody tr:hover 
-{ 
-    background: #eee; 
-    cursor:hand;
-    cursor:pointer;
-} 
-
-
-/*
-.selectRecord {
-    background-color: #b8ffb8;
-}
-
-.deselectRecord {
-    background-color: #ffd4d4;
-}
-*/
-
-
-table.tblDataSelection tr th
-{
-    border-left: 1px solid #FFFFFF;
-    border-right: 1px solid #C8C8C8;
-    padding: 6px 4px 4px 6px;
-    text-align: left;
-    vertical-align: middle;
-}
-
-
-table.tblDataSelection tr
-{
-    border-bottom-style:solid;
-    border-bottom-width:1px;
-    border-bottom-color:#eeeeee;    
-}
-
-table.tblDataSelection tbody td 
-{
-
-    
-    padding-top:3px;
-    padding-right:3px;
-    padding-bottom:3px;
-    padding-left:3px;
-    border-left-color:#bebebe;
-    border-left-width: 1px;
-    border-left-style:dotted;
-}
-
-table.tblDataSelection th
-{
-    font-family: Arial, Tahoma;
-    font-weight:bold;  
-    font-size:9pt; 
-}
-
-td.selectionCol {text-align:center;}
-th.selectionColHeader {text-align:center; }
-
-.AllNone {font-size:8pt; font-family: Arial; display: inline;}
-
-a.AllNone {color: Blue; text-decoration:none;font-weight:normal;}
-a:hover.AllNone {text-decoration:underline;}
-
-
-.statusBar
-{
-    width:100%; 
-    height:35px;
-    background-color:#eeeeee;
-    font-family:Arial;
-    
-}
-
-.statusContent
-{
+.CommentUser{
     float:left;
-    font-size:10pt;
-    margin-left:20px;
-    margin-top:10px;
-    margin-bottom:10px;
-}
-.divSubmit 
-{
-    float:right;
-    padding-right:10px;
-    padding-bottom:5px;
-    padding-top:5px;
-    padding-left:10px;
+    margin-left: 5px;
 }
 
-.divLoading 
-{
-    top:0;
-    left:0;
-    position:absolute;
-    background-color:#fff;
-    z-index:32767;
-    height:100%;
-    width:100%;
-    overflow:auto;
-    opacity: 0.85;
-    
+.CommentDate{
+    float: right;
+    margin-right: 5px;
 }
 
-.loadingImg 
-{
-    /*padding-top:50px;  */
+.CommentTitle{
+    border-bottom: 1px solid;
+    height:20px;
+    background-color: #4EB1BA;
+    width: 100%;
 }
 
-.loadingMsg
-{
-    text-align:center;
-    display: block;
-}
-.loadingInnerMsg
-{
-    margin-top:10px;
-    font-family: Arial, Verdana;
-    font-size:9pt;
-    color:#000;    
-}
-
-
-/****************************************
-Properties for the qvpp
-****************************************/
-.prop-130
-{
-    height:130px;    
-}
-.prop-100
-{
-    height:100px;    
-}
-.prop-90
-{
-    height:90px;    
+.CommentBody{
+    /*height:60px;*/
+    padding-left: 5px;
 }
