@@ -91,16 +91,19 @@ function CommentWriteBack_Init() {
                 DisplayDiv.className = "DisplayDiv";
 
                 var DisplayTextDiv = document.createElement("div");
+                DisplayTextDiv.id = ""
                 DisplayTextDiv.style.height = "90%";
                 DisplayTextDiv.style.width = "100%";
                 DisplayDiv.appendChild(DisplayTextDiv)
 
-                var DisplayCommentTextArea = document.createElement("textarea");
-                DisplayCommentTextArea.id = "DisplayCommentTextArea" + GetSafeId();
-                DisplayCommentTextArea.className = "DisplayCommentTextArea";
-                DisplayCommentTextArea.style.height = "100%";
-                DisplayCommentTextArea.style.width = "100%"
-                DisplayTextDiv.appendChild(DisplayCommentTextArea);
+                // var DisplayCommentTextArea = document.createElement("textarea");
+                // DisplayCommentTextArea.id = "DisplayCommentTextArea" + GetSafeId();
+                // DisplayCommentTextArea.className = "DisplayCommentTextArea";
+                // DisplayCommentTextArea.style.height = "100%";
+                // DisplayCommentTextArea.style.width = "100%"
+                // DisplayCommentTextArea.setAttribute("readonly", "true");
+
+                // DisplayTextDiv.appendChild(DisplayCommentTextArea);
 
                 var AddCommentDiv = document.createElement("div");
                 AddCommentDiv.style.height = "10%";
@@ -245,6 +248,26 @@ function CommentWriteBack_Init() {
 
 				$('#DisplayCommentTextArea' + GetSafeId()).val(CommentStr);
 			}
+
+            function DisplayComment(Comment){
+                var DateTimeAdded = new Date(parseInt(Comment.DateAdded.replace("/Date(", "").replace(")/",""), 10));
+
+                var commentDiv = document.createElement("div");
+                commentDiv.className = "Comment";
+
+                var commentTitle = document.createElement("div");
+                commentTitle.className = "title";
+                commentTitle.innerHTML = '<span class="user"><b>' + decodeURI(CommentsList[i].User) + '</b></span>'
+                                        + '<span class="date">' + DateTimeAdded.myFormat() + '</span>';
+
+                var commentBody = document.createElement("div");
+                commentBody.className = "body";
+                commentBody.innerHTML = '<span>' + Comment.Message + '</span>';
+
+                commentDiv.appendChild(commentTitle);
+                commentDiv.appendChild(commentBody);
+
+            }
 
             // ------------------------------------------------------------------
             // Loading Panel
@@ -404,6 +427,7 @@ $.postify = function(value) {
 Date.prototype.myFormat = function() {
    //Grab each of your components
    var yyyy = this.getFullYear().toString();
+   var yy = yyyy.slice(-2);
    var MM = (this.getMonth()+1).toString();
    var dd  = this.getDate().toString();
    var hh = this.getHours().toString();
@@ -411,7 +435,7 @@ Date.prototype.myFormat = function() {
    var ss = this.getSeconds().toString();
 
    //Returns your formatted result
-   return (dd[1]?dd:"0"+dd[0]) + '/' + (MM[1]?MM:"0"+MM[0]) + '/' + yyyy + ' ' + (hh[1]?hh:"0"+hh[0]) + ':' + (mm[1]?mm:"0"+mm[0]);
+   return (dd[1]?dd:"0"+dd[0]) + '/' + (MM[1]?MM:"0"+MM[0]) + '/' + yy + ' ' + (hh[1]?hh:"0"+hh[0]) + ':' + (mm[1]?mm:"0"+mm[0]);
 };
 
 // Some helper functions
